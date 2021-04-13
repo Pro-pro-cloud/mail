@@ -5,5 +5,14 @@
 </template>
 
 <style lang="scss">
-
+  @import "assets/css/base";
 </style>
+
+<script>
+export default {
+  name: 'app',
+  components: {
+
+  }
+}
+</script>>
