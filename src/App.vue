@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    hello vue
+    <router-view></router-view>
+    <main-tabbar></main-tabbar>
   </div>
 </template>
 
@@ -9,10 +10,12 @@
 </style>
 
 <script>
+import MainTabbar from './components/content/MainTabbar/MainTabbar'
+
 export default {
   name: 'app',
   components: {
-
+    MainTabbar
   }
 }
 </script>>
