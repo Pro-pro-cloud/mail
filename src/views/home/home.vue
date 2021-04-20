@@ -4,9 +4,10 @@
     <swiper>
       <SwiperItem v-for="(item,index) in banners" :key="index">
         <a :href="item.link"></a>
-        <img :src="item.image">
+        <img :src="item.image" height="200px" width="100%">
       </SwiperItem>
     </swiper>
+    <home-recommon :recommend="recommends"></home-recommon>
   </div>
 </template>
 
@@ -14,13 +15,15 @@
 import Navbar from '../../components/common/navbar/navbar'
 import { getHomeMultidata } from '../../network/home'
 import { Swiper, SwiperItem } from '../../components/swiper'
+import HomeRecommon from './homeComps/homeRecommon.vue'
 
 export default {
   name: 'Home',
   components: {
     Navbar,
     Swiper,
-    SwiperItem
+    SwiperItem,
+    HomeRecommon
   },
   data () {
     return {
@@ -33,7 +36,6 @@ export default {
     getHomeMultidata().then((res) => {
       this.banners = res.data.banner.list
       this.recommends = res.data.recommend.list
-      console.log(this.banners)
     })
   }
 }
@@ -43,5 +45,8 @@ export default {
 .home-nav{
   background-color: var(--color-tint);
   color: white;
+}
+.homerecommend{
+  width: 100%;
 }
 </style>
