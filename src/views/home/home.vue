@@ -8,6 +8,7 @@
       </SwiperItem>
     </swiper>
     <home-recommon :recommend="recommends"></home-recommon>
+    <feature-view></feature-view>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import Navbar from '../../components/common/navbar/navbar'
 import { getHomeMultidata } from '../../network/home'
 import { Swiper, SwiperItem } from '../../components/swiper'
 import HomeRecommon from './homeComps/homeRecommon.vue'
+import featureView from './homeComps/featureView'
 
 export default {
   name: 'Home',
@@ -23,7 +25,8 @@ export default {
     Navbar,
     Swiper,
     SwiperItem,
-    HomeRecommon
+    HomeRecommon,
+    featureView
   },
   data () {
     return {
@@ -42,9 +45,19 @@ export default {
 </script>
 
 <style scoped>
+#home {
+  padding-top: 44px;
+}
+
 .home-nav{
   background-color: var(--color-tint);
   color: white;
+
+  position: fixed;
+  left: 0;
+  top:0;
+  right : 0;
+  z-index: 9;
 }
 .homerecommend{
   width: 100%;

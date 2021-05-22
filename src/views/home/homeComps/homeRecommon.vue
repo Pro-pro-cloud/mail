@@ -3,7 +3,7 @@
   <div class="recommend">
     <div v-for="(item,index) in recommend" :key="index" class="recmmend-item">
       <a :href="item.link">
-        <img :src="item.image" width="75%"/>
+        <img :src="item.image" width="60%"/>
         <div>{{item.title}}</div>
       </a>
     </div>
