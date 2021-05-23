@@ -97,7 +97,7 @@ import featureView from './homeComps/featureView'
 import Navbar from '../../components/common/navbar/navbar'
 import tabbarControl from '../../components/content/tabberControl/tabberControl'
 
-import { getHomeMultidata } from '../../network/home'
+import { getHomeMultidata, getHomeGoods } from '../../network/home'
 
 export default {
   name: 'Home',
@@ -112,15 +112,38 @@ export default {
   data () {
     return {
       banners: [],
-      recommends: []
+      recommends: [],
+      goods: {
+        pop: { page: 0, list: [] },
+        new: { page: 0, list: [] },
+        sell: { page: 0, list: [] }
+      }
     }
   },
   created () {
     // 请求多个数据
-    getHomeMultidata().then((res) => {
-      this.banners = res.data.banner.list
-      this.recommends = res.data.recommend.list
-    })
+    this.getHomeMultidata()
+    // 请求商品数据
+    this.getHomeGoodsFun('pop')
+    this.getHomeGoodsFun('new')
+    this.getHomeGoodsFun('sell')
+  },
+  methods: {
+    getHomeMultidata () {
+      getHomeMultidata().then((res) => {
+        this.banners = res.data.banner.list
+        this.recommends = res.data.recommend.list
+      })
+    },
+    getHomeGoodsFun (type) {
+      // 去除单引号
+      const trueType = type.replace(/'/g, '')
+      const page = this.goods[trueType].page + 1
+      getHomeGoods(type, page).then((res) => {
+        this.goods[trueType].list.push(...res.data.list)
+        this.goods[trueType].page += 1
+      })
+    }
   }
 }
 </script>

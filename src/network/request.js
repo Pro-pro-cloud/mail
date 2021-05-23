@@ -6,6 +6,7 @@ export function request (config) {
     baseURL: 'http://152.136.185.210:7878/api/m5',
     timeout: 5000
   })
+  // 请求拦截 这里对请求数据做处理
   instance.interceptors.request.use(config => {
     // console.log(config)
     return config
