@@ -9,15 +9,95 @@
     </swiper>
     <home-recommon :recommend="recommends"></home-recommon>
     <feature-view></feature-view>
+    <tabbarControl class="tab-control" :titles = "['流行','新款','精品']"></tabbarControl>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+        <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
+
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+<div>我是填充</div>
+    <div>我是填充</div>
+    <div>我是填充</div>
   </div>
 </template>
 
 <script>
-import Navbar from '../../components/common/navbar/navbar'
-import { getHomeMultidata } from '../../network/home'
+
 import { Swiper, SwiperItem } from '../../components/swiper'
 import HomeRecommon from './homeComps/homeRecommon.vue'
 import featureView from './homeComps/featureView'
+
+import Navbar from '../../components/common/navbar/navbar'
+import tabbarControl from '../../components/content/tabberControl/tabberControl'
+
+import { getHomeMultidata } from '../../network/home'
 
 export default {
   name: 'Home',
@@ -26,7 +106,8 @@ export default {
     Swiper,
     SwiperItem,
     HomeRecommon,
-    featureView
+    featureView,
+    tabbarControl
   },
   data () {
     return {
@@ -61,5 +142,11 @@ export default {
 }
 .homerecommend{
   width: 100%;
+}
+
+.tab-control{
+  position: sticky;
+  top: 44px;
+  background:#fff;
 }
 </style>
