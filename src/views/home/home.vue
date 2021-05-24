@@ -10,7 +10,7 @@
     <home-recommon :recommend="recommends"></home-recommon>
     <feature-view></feature-view>
     <tabbarControl class="tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick'></tabbarControl>
-    <goods-list :goods = "goods[type].list"></goods-list>
+    <goods-list :goods = "goods[type].list" class="homeGoods"></goods-list>
   </div>
 </template>
 
@@ -114,5 +114,9 @@ export default {
   top: 44px;
   background:#fff;
   z-index: 9;
+}
+
+.homeGoods{
+  padding-bottom: 49px;
 }
 </style>
