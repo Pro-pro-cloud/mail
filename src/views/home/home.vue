@@ -9,82 +9,8 @@
     </swiper>
     <home-recommon :recommend="recommends"></home-recommon>
     <feature-view></feature-view>
-    <tabbarControl class="tab-control" :titles = "['流行','新款','精品']"></tabbarControl>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-        <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
-
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-<div>我是填充</div>
-    <div>我是填充</div>
-    <div>我是填充</div>
+    <tabbarControl class="tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick'></tabbarControl>
+    <goods-list :goods = "goods[type].list"></goods-list>
   </div>
 </template>
 
@@ -93,6 +19,7 @@
 import { Swiper, SwiperItem } from '../../components/swiper'
 import HomeRecommon from './homeComps/homeRecommon.vue'
 import featureView from './homeComps/featureView'
+import GoodsList from '../../components/content/goods/GoodsList'
 
 import Navbar from '../../components/common/navbar/navbar'
 import tabbarControl from '../../components/content/tabberControl/tabberControl'
@@ -107,7 +34,9 @@ export default {
     SwiperItem,
     HomeRecommon,
     featureView,
-    tabbarControl
+    tabbarControl,
+    GoodsList
+
   },
   data () {
     return {
@@ -117,7 +46,8 @@ export default {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] }
-      }
+      },
+      type: 'pop'
     }
   },
   created () {
@@ -143,6 +73,18 @@ export default {
         this.goods[trueType].list.push(...res.data.list)
         this.goods[trueType].page += 1
       })
+    },
+    /*
+    * 事件监听
+    */
+    tabClick (index) {
+      if (index === 0) {
+        this.type = 'pop'
+      } else if (index === 1) {
+        this.type = 'new'
+      } else if (index === 2) {
+        this.type = 'sell'
+      }
     }
   }
 }
@@ -171,5 +113,6 @@ export default {
   position: sticky;
   top: 44px;
   background:#fff;
+  z-index: 9;
 }
 </style>
