@@ -1,16 +1,21 @@
 <template>
   <div id="home">
     <navbar class="home-nav"><div slot="center">购物街</div></navbar>
-    <swiper>
-      <SwiperItem v-for="(item,index) in banners" :key="index">
-        <a :href="item.link"></a>
-        <img :src="item.image" height="200px" width="100%">
-      </SwiperItem>
-    </swiper>
-    <home-recommon :recommend="recommends"></home-recommon>
-    <feature-view></feature-view>
-    <tabbarControl class="tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick'></tabbarControl>
-    <goods-list :goods = "goods[type].list" class="homeGoods"></goods-list>
+
+    <scroll class="wrapper" ref="scroll">
+      <swiper>
+        <SwiperItem v-for="(item,index) in banners" :key="index">
+          <a :href="item.link"></a>
+          <img :src="item.image" height="200px" width="100%">
+        </SwiperItem>
+      </swiper>
+      <home-recommon :recommend="recommends"></home-recommon>
+      <feature-view></feature-view>
+      <tabbarControl class="tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick'></tabbarControl>
+      <goods-list :goods = "goods[type].list" class="homeGoods"></goods-list>
+    </scroll>
+
+    <back-top @backToTop ='homeToTop'></back-top>
   </div>
 </template>
 
@@ -25,6 +30,8 @@ import Navbar from '../../components/common/navbar/navbar'
 import tabbarControl from '../../components/content/tabberControl/tabberControl'
 
 import { getHomeMultidata, getHomeGoods } from '../../network/home'
+import Scroll from '../../components/common/scroll/scroll.vue'
+import BackTop from '../../components/common/backTop/backTop.vue'
 
 export default {
   name: 'Home',
@@ -35,7 +42,9 @@ export default {
     HomeRecommon,
     featureView,
     tabbarControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
 
   },
   data () {
@@ -75,6 +84,12 @@ export default {
       })
     },
     /*
+    * 返回顶部
+    */
+    homeToTop () {
+      this.$refs.scroll.scrollTo(0, 0, 500)
+    },
+    /*
     * 事件监听
     */
     tabClick (index) {
@@ -92,7 +107,8 @@ export default {
 
 <style scoped>
 #home {
-  padding-top: 44px;
+  position: relative;
+  height: 100vh;
 }
 
 .home-nav{
@@ -116,7 +132,12 @@ export default {
   z-index: 9;
 }
 
-.homeGoods{
-  padding-bottom: 49px;
+.wrapper{
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
 }
 </style>
