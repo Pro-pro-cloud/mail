@@ -2,7 +2,7 @@
   <div id="home">
     <navbar class="home-nav"><div slot="center">购物街</div></navbar>
 
-    <scroll class="wrapper" ref="scroll">
+    <scroll class="wrapper" ref="scroll" :probe-type="3" @watchScroll="watchScroll">
       <swiper>
         <SwiperItem v-for="(item,index) in banners" :key="index">
           <a :href="item.link"></a>
@@ -15,7 +15,7 @@
       <goods-list :goods = "goods[type].list" class="homeGoods"></goods-list>
     </scroll>
 
-    <back-top @backToTop ='homeToTop'></back-top>
+    <back-top @backToTop ='homeToTop' v-show="isShowToTop"></back-top>
   </div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
     return {
       banners: [],
       recommends: [],
+      isShowToTop: false,
       goods: {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
@@ -68,12 +69,18 @@ export default {
     this.getHomeGoodsFun('sell')
   },
   methods: {
+    /*
+    * Multidata请求数据
+    */
     getHomeMultidata () {
       getHomeMultidata().then((res) => {
         this.banners = res.data.banner.list
         this.recommends = res.data.recommend.list
       })
     },
+    /*
+    * 请求商品数据
+    */
     getHomeGoodsFun (type) {
       // 去除单引号
       const trueType = type.replace(/'/g, '')
@@ -90,7 +97,7 @@ export default {
       this.$refs.scroll.scrollTo(0, 0, 500)
     },
     /*
-    * 事件监听
+    * 事件监听相关
     */
     tabClick (index) {
       if (index === 0) {
@@ -99,6 +106,13 @@ export default {
         this.type = 'new'
       } else if (index === 2) {
         this.type = 'sell'
+      }
+    },
+    watchScroll (position) {
+      if (-position.y < 1000) {
+        this.isShowToTop = false
+      } else {
+        this.isShowToTop = true
       }
     }
   }
