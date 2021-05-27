@@ -19,7 +19,12 @@ export default {
     probeType: {
       type: Number,
       default: 0
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
     }
+
   },
   data () {
     return {
@@ -35,7 +40,8 @@ export default {
       observeImage: true,
       click: true,
       mouseWheel: true,
-      probeType: this.probeType
+      probeType: this.probeType,
+      pullUpLoad: this.pullUpLoad
     })
 
     /*
@@ -44,10 +50,20 @@ export default {
     this.scroll.on('scroll', (position) => {
       this.$emit('watchScroll', position)
     })
+
+    /*
+    * 上拉监听
+    */
+    this.scroll.on('pullingUp', () => {
+      this.$emit('pullUp')
+    })
   },
   methods: {
     scrollTo (x, y, time = 300) {
       this.scroll.scrollTo(x, y, time)
+    },
+    finishPullUp () {
+      this.scroll.finishPullUp()
     }
   }
 }

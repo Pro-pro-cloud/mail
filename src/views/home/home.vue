@@ -2,7 +2,8 @@
   <div id="home">
     <navbar class="home-nav"><div slot="center">购物街</div></navbar>
 
-    <scroll class="wrapper" ref="scroll" :probe-type="3" @watchScroll="watchScroll">
+    <scroll class="wrapper" ref="scroll" :probe-type="3" @watchScroll="watchScroll" :pull-up-load="true"
+    @pullUp = "pullUpLoadMore">
       <swiper>
         <SwiperItem v-for="(item,index) in banners" :key="index">
           <a :href="item.link"></a>
@@ -12,7 +13,7 @@
       <home-recommon :recommend="recommends"></home-recommon>
       <feature-view></feature-view>
       <tabbarControl class="tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick'></tabbarControl>
-      <goods-list :goods = "goods[type].list" class="homeGoods"></goods-list>
+      <goods-list :goods = "goods[nowtype].list" class="homeGoods"></goods-list>
     </scroll>
 
     <back-top @backToTop ='homeToTop' v-show="isShowToTop"></back-top>
@@ -57,7 +58,7 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] }
       },
-      type: 'pop'
+      nowtype: 'pop'
     }
   },
   created () {
@@ -81,31 +82,42 @@ export default {
     /*
     * 请求商品数据
     */
-    getHomeGoodsFun (type) {
+    getHomeGoodsFun (nowtype) {
       // 去除单引号
-      const trueType = type.replace(/'/g, '')
+      const trueType = nowtype.replace(/'/g, '')
       const page = this.goods[trueType].page + 1
-      getHomeGoods(type, page).then((res) => {
+      getHomeGoods(nowtype, page).then((res) => {
         this.goods[trueType].list.push(...res.data.list)
         this.goods[trueType].page += 1
+        console.log(this.$refs.scroll)
+        this.$refs.scroll.finishPullUp()
       })
     },
+
     /*
     * 返回顶部
     */
     homeToTop () {
       this.$refs.scroll.scrollTo(0, 0, 500)
     },
+
+    /*
+    * 上拉加载更多
+    */
+    pullUpLoadMore () {
+      this.getHomeGoodsFun(this.nowtype)
+    },
+
     /*
     * 事件监听相关
     */
     tabClick (index) {
       if (index === 0) {
-        this.type = 'pop'
+        this.nowtype = 'pop'
       } else if (index === 1) {
-        this.type = 'new'
+        this.nowtype = 'new'
       } else if (index === 2) {
-        this.type = 'sell'
+        this.nowtype = 'sell'
       }
     },
     watchScroll (position) {
