@@ -47,16 +47,20 @@ export default {
     /*
     * 滚动监听
     */
-    this.scroll.on('scroll', (position) => {
-      this.$emit('watchScroll', position)
-    })
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on('scroll', (position) => {
+        this.$emit('watchScroll', position)
+      })
+    }
 
     /*
     * 上拉监听
     */
-    this.scroll.on('pullingUp', () => {
-      this.$emit('pullUp')
-    })
+    if (this.pullUpLoad) {
+      this.scroll.on('pullingUp', () => {
+        this.$emit('pullUp')
+      })
+    }
   },
   methods: {
     scrollTo (x, y, time = 300) {

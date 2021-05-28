@@ -89,7 +89,6 @@ export default {
       getHomeGoods(nowtype, page).then((res) => {
         this.goods[trueType].list.push(...res.data.list)
         this.goods[trueType].page += 1
-        console.log(this.$refs.scroll)
         this.$refs.scroll.finishPullUp()
       })
     },

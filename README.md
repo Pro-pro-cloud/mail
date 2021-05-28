@@ -31,7 +31,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## 2.better-scroll 无法拖动情况问题解决
 
 ### 原因 ： 
-照片等数据加载存在同步异步问题，在better-scroll创建时无法加载数据
+    better-scroll在决定多少区域可滚动时，是通过scrollHeight属性决定的
+        scrollHeight是content区域的高度
+        但是在计算scrollheight属性时，照片等还没有加载
+        所以导致scrollHeight计算错误
+        出现无法拖动的问题
 
 ### 解决方法 ：
-在updata生命周期函数内新建better-scroll 对象
+    在创建better-scroll对象时，添加 
+        observeDOM: true,
+        observeImage: true,
+    双参数
