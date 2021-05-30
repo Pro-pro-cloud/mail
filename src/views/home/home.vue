@@ -1,18 +1,19 @@
 <template>
   <div id="home">
     <navbar class="home-nav"><div slot="center">购物街</div></navbar>
+    <tabbarControl class="tab-control-top tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick' ref="tabControltop" v-show="isTabFixed"></tabbarControl>
 
     <scroll class="wrapper" ref="scroll" :probe-type="3" @watchScroll="watchScroll" :pull-up-load="true"
     @pullUp = "pullUpLoadMore">
       <swiper>
         <SwiperItem v-for="(item,index) in banners" :key="index">
           <a :href="item.link"></a>
-          <img :src="item.image" height="200px" width="100%">
+          <img :src="item.image" height="200px" width="100%" @load="imgLoad">
         </SwiperItem>
       </swiper>
       <home-recommon :recommend="recommends"></home-recommon>
       <feature-view></feature-view>
-      <tabbarControl class="tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick'></tabbarControl>
+      <tabbarControl class="tab-control-bot tab-control" :titles = "['流行','新款','精品']" @tabClick = 'tabClick' ref="tabControl"></tabbarControl>
       <goods-list :goods = "goods[nowtype].list" class="homeGoods"></goods-list>
     </scroll>
 
@@ -58,7 +59,10 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] }
       },
-      nowtype: 'pop'
+      nowtype: 'pop',
+      tabOffsetTop: 0,
+      isLoad: false,
+      isTabFixed: false
     }
   },
   created () {
@@ -68,6 +72,9 @@ export default {
     this.getHomeGoodsFun('pop')
     this.getHomeGoodsFun('new')
     this.getHomeGoodsFun('sell')
+  },
+  mounted () {
+
   },
   methods: {
     /*
@@ -118,12 +125,25 @@ export default {
       } else if (index === 2) {
         this.nowtype = 'sell'
       }
+      this.$refs.tabControltop.currentIndex = index
+      this.$refs.tabControl.currentIndex = index
     },
     watchScroll (position) {
+      // 决定是否吸顶
+      this.isTabFixed = -position.y >= this.tabOffsetTop
       if (-position.y < 1000) {
         this.isShowToTop = false
       } else {
         this.isShowToTop = true
+      }
+    },
+    imgLoad () {
+    // 获取tabber的距离顶部高度 $el可以得到组件的原型例如div
+      if (!this.isLoad) { // 这样做只会发生一次
+        // 获取高度
+        this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop
+
+        this.isLoad = true
       }
     }
   }
@@ -139,22 +159,19 @@ export default {
 .home-nav{
   background-color: var(--color-tint);
   color: white;
-
-  position: fixed;
-  left: 0;
-  top:0;
-  right : 0;
-  z-index: 9;
 }
 .homerecommend{
   width: 100%;
 }
 
 .tab-control{
-  position: sticky;
-  top: 44px;
+
   background:#fff;
   z-index: 9;
+}
+
+.tab-control-top {
+  position: relative;
 }
 
 .wrapper{
@@ -165,4 +182,5 @@ export default {
   left: 0;
   overflow: hidden;
 }
+
 </style>
