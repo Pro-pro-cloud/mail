@@ -62,7 +62,8 @@ export default {
       nowtype: 'pop',
       tabOffsetTop: 0,
       isLoad: false,
-      isTabFixed: false
+      isTabFixed: false,
+      saveY: 0
     }
   },
   created () {
@@ -75,6 +76,12 @@ export default {
   },
   mounted () {
 
+  },
+  activated () { // 进入组件执行
+    this.$refs.scroll.scrollTo(0, this.saveY, 500)
+  },
+  deactivated () { // 离开组件执行
+    this.saveY = this.$refs.scroll.getScrollY()
   },
   methods: {
     /*
@@ -125,6 +132,15 @@ export default {
       } else if (index === 2) {
         this.nowtype = 'sell'
       }
+
+      // 如果切换tab选项卡其他页面会回到顶部
+      if (this.$refs.tabControl.currentIndex !== index) {
+        console.log(this.tabOffsetTop)
+        this.$refs.scroll.scrollTo(0, -this.tabOffsetTop, 500)
+        this.saveY = -this.tabOffsetTop
+      }
+
+      // 同步上选项卡与下选项卡数据 解决吸顶问题bug
       this.$refs.tabControltop.currentIndex = index
       this.$refs.tabControl.currentIndex = index
     },
