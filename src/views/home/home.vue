@@ -135,7 +135,7 @@ export default {
 
       // 如果切换tab选项卡其他页面会回到顶部
       if (this.$refs.tabControl.currentIndex !== index) {
-        console.log(this.tabOffsetTop)
+        console.log('saveY1:' + this.saveY + 'tabOffsetTop:' + this.tabOffsetTop)
         this.$refs.scroll.scrollTo(0, -this.tabOffsetTop, 500)
         this.saveY = -this.tabOffsetTop
       }

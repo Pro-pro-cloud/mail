@@ -3,6 +3,7 @@
     <keep-alive>
       <!-- keep-alive 不会让组件在离开时销毁 -->
       <router-view></router-view>
+
     </keep-alive>
     <main-tabbar></main-tabbar>
   </div>
