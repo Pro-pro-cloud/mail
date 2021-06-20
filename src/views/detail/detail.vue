@@ -1,13 +1,15 @@
 <template>
   <div>
     <detail-navbar></detail-navbar>
+    <detail-swiper :topImage="topImage"></detail-swiper>
   </div>
 </template>
 
 <script>
 import DetailNavbar from './detailCom/detailNavbar.vue'
-import { getDetailData } from '../../network/datail'
+import DetailSwiper from './detailCom/detailSwiper.vue'
 
+import { getDetailData } from '../../network/datail'
 export default {
 
   name: 'detail',
@@ -18,16 +20,20 @@ export default {
     }
   },
   components: {
-    DetailNavbar
+    DetailNavbar,
+    DetailSwiper
 
   },
   created () {
     this.iid = this.$route.query.iid
-
-    getDetailData(this.iid).then(res => {
-      console.log(res)
-      this.topImage = res.result.itemInfo.topImages
-    })
+    this.getDetailData(this.iid)
+  },
+  methods: {
+    getDetailData (iid) {
+      getDetailData(iid).then(res => {
+        this.topImage = res.result.itemInfo.topImages
+      })
+    }
   }
 }
 </script>

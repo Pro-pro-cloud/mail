@@ -25,6 +25,7 @@ export default {
   },
   computed: {
     isActive () {
+      console.log(this.$route.path.includes(this.path))
       return this.$route.path.includes(this.path)
     },
     activeStyle () {

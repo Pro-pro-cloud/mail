@@ -5,7 +5,7 @@
 
     <scroll class="wrapper" ref="scroll" :probe-type="3" @watchScroll="watchScroll" :pull-up-load="true"
     @pullUp = "pullUpLoadMore">
-      <swiper>
+      <swiper ref="swiper">
         <SwiperItem v-for="(item,index) in banners" :key="index">
           <a :href="item.link"></a>
           <img :src="item.image" height="200px" width="100%" @load="imgLoad">
@@ -78,9 +78,11 @@ export default {
 
   },
   activated () { // 进入组件执行
-    this.$refs.scroll.scrollTo(0, this.saveY, 500)
+    this.$refs.swiper.startTimer()
+    this.$refs.scroll.scrollTo(0, this.saveY, 0)
   },
   deactivated () { // 离开组件执行
+    this.$refs.swiper.stopTimer()
     this.saveY = this.$refs.scroll.getScrollY()
   },
   methods: {
@@ -135,7 +137,6 @@ export default {
 
       // 如果切换tab选项卡其他页面会回到顶部
       if (this.$refs.tabControl.currentIndex !== index) {
-        console.log('saveY1:' + this.saveY + 'tabOffsetTop:' + this.tabOffsetTop)
         this.$refs.scroll.scrollTo(0, -this.tabOffsetTop, 500)
         this.saveY = -this.tabOffsetTop
       }
@@ -161,6 +162,10 @@ export default {
 
         this.isLoad = true
       }
+    },
+    /* 页面刷新 */
+    reload () {
+      location.reload()
     }
   }
 }
